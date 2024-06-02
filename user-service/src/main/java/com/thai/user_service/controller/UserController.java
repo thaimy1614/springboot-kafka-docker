@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.kafka.core.KafkaTemplate;
 @RequiredArgsConstructor
 @RestController
 @Slf4j
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-
+    private final KafkaTemplate<String, Object> kafkaTemplate;
     @PostMapping
     ResponseEntity<User> createUser(@RequestBody User user) {
-        userService.createUser(user);
-
-        return ResponseEntity.ok(user);
+        User u = userService.createUser(user);
+        kafkaTemplate.send("notification", u);
+        return ResponseEntity.ok(u);
     }
 }
