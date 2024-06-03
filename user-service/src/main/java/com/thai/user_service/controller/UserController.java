@@ -1,5 +1,6 @@
 package com.thai.user_service.controller;
 
+import com.thai.user_service.dto.MessageDTO;
 import com.thai.user_service.entity.User;
 import com.thai.user_service.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,13 @@ public class UserController {
     @PostMapping
     ResponseEntity<User> createUser(@RequestBody User user) {
         User u = userService.createUser(user);
+        MessageDTO messageDTO = MessageDTO
+                .builder()
+                .message("Hello "+ u.getEmail().substring(0,u.getEmail().length()-10))
+                .topic("Test Kafka")
+                .from("")
+                .to(u.getEmail())
+                .build();
         kafkaTemplate.send("notification", u);
         return ResponseEntity.ok(u);
     }
