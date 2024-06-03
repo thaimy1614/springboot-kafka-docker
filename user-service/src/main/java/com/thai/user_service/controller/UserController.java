@@ -28,7 +28,7 @@ public class UserController {
                 .from("")
                 .to(u.getEmail())
                 .build();
-        kafkaTemplate.send("notification", u);
+        kafkaTemplate.send("notification", messageDTO);
         return ResponseEntity.ok(u);
     }
 }
