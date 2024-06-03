@@ -13,7 +13,7 @@ public class UserServiceApplication {
 
 	@Bean
 	NewTopic notification() {
-		return new NewTopic("notification", 3, (short) 1);
+		return new NewTopic("notification", 3, (short) 3);
 	}
 
 }

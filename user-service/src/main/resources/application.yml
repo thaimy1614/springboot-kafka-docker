@@ -14,11 +14,11 @@ spring:
       ddl-auto: update
   kafka:
     # Kafka server url
-    bootstrap-servers: localhost:29092, localhost:39092, localhost:49092
+    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       retries: 1
-      acks: all
+      acks: -1
       properties:
         enable.idempotence: true
         max.in.flight.requests.per.connection: 5
